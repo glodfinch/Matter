@@ -1,9 +1,12 @@
 #include "game.h"
+#include "spriteContainer.h"
+#include <memory>
 
 Game::Game( int w, int h, std::string name, std::string ver )
 :  window( sf::VideoMode( w, h ), name + " " + ver, sf::Style::Titlebar | sf::Style::Close )
 {
     std::shared_ptr<SpriteContainer> test( new SpriteContainer( "./img/archenoid.stand0.png" ) );
+    gameObjects.push_back( test );
 }
 
 bool Game::start()
@@ -51,6 +54,12 @@ bool Game::render()
 {
     bool ret = true;
     window.clear();
-    //window.draw()
+
+    for( unsigned int i = 0; i < gameObjects.size(); i++ )
+    {
+        window.draw( std::dynamic_pointer_cast<SpriteContainer>( gameObjects[ i ] )->sprite );
+    }
+
+    window.display();
     return ret;
 }
