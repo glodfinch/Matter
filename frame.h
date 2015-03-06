@@ -1,6 +1,8 @@
 #ifndef FRAME_H
 #define FRAME_H
 
+#include <SFML/Graphics.hpp>
+
 class Frame
 {
     public:

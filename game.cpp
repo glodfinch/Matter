@@ -1,6 +1,7 @@
 #include "game.h"
 #include "spriteContainer.h"
 #include "animContainer.h"
+#include "player.h"
 #include <memory>
 
 Game::Game( int w, int h, std::string name, std::string ver )
@@ -21,6 +22,9 @@ Game::Game( int w, int h, std::string name, std::string ver )
     std::shared_ptr<AnimContainer> testAnim( new AnimContainer( tempFiles, tempDel ) );
     testAnim->sprite.setPosition( 30, 0 );
     gameObjects.push_back( testAnim );
+    std::shared_ptr<Player> testPlayer( new Player( tempFiles, tempDel ) );
+    testPlayer->sprite.setPosition( 0, 50 );
+    gameObjects.push_back( testPlayer );
 }
 
 bool Game::start()
@@ -78,6 +82,10 @@ bool Game::update()
             std::dynamic_pointer_cast<AnimContainer>( gameObjects[ i ] )->incFrame();
             break;
 
+        case 3:
+            std::dynamic_pointer_cast<Player>( gameObjects[ i ] )->update();
+            break;
+
         default:
             break;
         }
@@ -101,6 +109,10 @@ bool Game::render()
 
         case 2: //Animation
             window.draw( std::dynamic_pointer_cast<AnimContainer>( gameObjects[ i ] )->sprite );
+            break;
+
+        case 3: //Player
+            window.draw( std::dynamic_pointer_cast<Player>( gameObjects[ i ] )->sprite );
             break;
 
         default:
