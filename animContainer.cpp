@@ -28,7 +28,7 @@ void AnimContainer::incFrame()
     {
         currentDelay = 0;
 
-        if( currentFrame == textureBank.size() )
+        if( currentFrame == textureBank.size() - 1 )
         {
             currentFrame = 0;
         }

@@ -6,6 +6,8 @@
 Game::Game( int w, int h, std::string name, std::string ver )
 :  window( sf::VideoMode( w, h ), name + " " + ver, sf::Style::Titlebar | sf::Style::Close )
 {
+    sf::View view( sf::FloatRect( 0, 0, 160, 90 ) );
+    window.setView( view );
     std::shared_ptr<SpriteContainer> testSprite( new SpriteContainer( "./img/archenoid.stand0.png" ) );
     gameObjects.push_back( testSprite );
 
@@ -93,11 +95,11 @@ bool Game::render()
     {
         switch( gameObjects[ i ]->type )
         {
-        case 1:
+        case 1: //Sprite
             window.draw( std::dynamic_pointer_cast<SpriteContainer>( gameObjects[ i ] )->sprite );
             break;
 
-        case 2:
+        case 2: //Animation
             window.draw( std::dynamic_pointer_cast<AnimContainer>( gameObjects[ i ] )->sprite );
             break;
 
