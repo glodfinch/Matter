@@ -24,9 +24,12 @@ Game::Game( int w, int h, std::string name, std::string ver )
 bool Game::start()
 {
     bool ret = true;
+    sf::Time timer;
+    const float frameLimit = 1000 / 60;
 
     while( window.isOpen() )
     {
+        float time = timer.asMilliseconds();
         ret &= events();
         ret &= update();
         ret &= render();
@@ -34,6 +37,11 @@ bool Game::start()
         if( !ret )
         {
             break;
+        }
+
+        if( timer.asMilliseconds() - time < frameLimit )
+        {
+            sf::sleep( sf::milliseconds( frameLimit - timer.asMilliseconds() ) );
         }
     }
 
