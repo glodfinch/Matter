@@ -71,25 +71,25 @@ bool Game::events()
 
         if( event.type == sf::Event::KeyPressed )
         {
-            if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
+            if( event.key.code == sf::Keyboard::D )
             {
-                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::Right, 1 ) ) );
+                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::D, 1 ) ) );
             }
-            else if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
+            else if( event.key.code == sf::Keyboard::A )
             {
-                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::Left, 1 ) ) );
+                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::A, 1 ) ) );
             }
         }
 
         if( event.type == sf::Event::KeyReleased )
         {
-            if( !sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
+            if( event.key.code == sf::Keyboard::D )
             {
-                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::Right, 0 ) ) );
+                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::D, 0 ) ) );
             }
-            else if( !sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
+            else if( event.key.code == sf::Keyboard::A )
             {
-                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::Left, 0 ) ) );
+                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::A, 0 ) ) );
             }
         }
     }

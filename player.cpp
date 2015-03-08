@@ -21,6 +21,12 @@ Player::Player( std::vector<std::string>& files, std::vector<int>& del )
     }
 
     sprite.setTexture( textureBank[ 0 ].texture, true );
+    KEYBOARD_W = false;
+    KEYBOARD_A = false;
+    KEYBOARD_S = false;
+    KEYBOARD_D = false;
+    KEYBOARD_WS = false;
+    KEYBOARD_AD = false;
 }
 
 void Player::update()
@@ -43,6 +49,22 @@ void Player::update()
         currentDelay++;
     }
 
+    if( KEYBOARD_A || KEYBOARD_D )
+    {
+        if( KEYBOARD_AD )
+        {
+            xVel = 1;
+        }
+        else
+        {
+            xVel = -1;
+        }
+    }
+    else
+    {
+        xVel = 0;
+    }
+
     sprite.setTexture( textureBank[ currentFrame ].texture, true );
     sprite.move( xVel, yVel );
 }
@@ -56,18 +78,27 @@ void Player::recvMessage( std::shared_ptr<Message>& msg )
             std::shared_ptr<KeyboardMessage> tempMsg( std::static_pointer_cast<KeyboardMessage>( msg ) );
             if( tempMsg->status )
             {
-                if( tempMsg->key == sf::Keyboard::Right )
+                if( tempMsg->key == sf::Keyboard::A )
                 {
-                    xVel = 1;
+                    KEYBOARD_A = true;
+                    KEYBOARD_AD = false;
                 }
-                else if( tempMsg->key == sf::Keyboard::Left )
+                else if( tempMsg->key == sf::Keyboard::D )
                 {
-                    xVel = -1;
+                    KEYBOARD_D = true;
+                    KEYBOARD_AD = true;
                 }
             }
             else
             {
-                xVel = 0;
+                if( tempMsg->key == sf::Keyboard::A )
+                {
+                    KEYBOARD_A = false;
+                }
+                else if( tempMsg->key == sf::Keyboard::D )
+                {
+                    KEYBOARD_D = false;
+                }
             }
             break;
         }

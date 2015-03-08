@@ -17,6 +17,7 @@ class Player: public Container
 		int currentDelay = 0;
         float xVel = 0;
         float yVel = 0;
+        bool KEYBOARD_W, KEYBOARD_A, KEYBOARD_S, KEYBOARD_D, KEYBOARD_WS, KEYBOARD_AD;
 
         Player( std::vector<std::string>& files, std::vector<int>& del );
         void update();
