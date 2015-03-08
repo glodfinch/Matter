@@ -12,7 +12,7 @@ class AnimContainer: public Container
 	public:
 		std::vector<Frame> textureBank;
 		sf::Sprite sprite;
-		int currentFrame = 0;
+		unsigned int currentFrame = 0;
 		int currentDelay = 0;
 
 		AnimContainer( std::vector<std::string>& files, std::vector<int>& del );

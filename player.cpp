@@ -47,22 +47,30 @@ void Player::update()
     sprite.move( xVel, yVel );
 }
 
-void Player::recvMessage( int msg )
+void Player::recvMessage( std::shared_ptr<Message>& msg )
 {
-    switch( msg )
+    switch( msg->type )
     {
-        case 1: //Press right
-            xVel = 1;
+        case 1: //Keyboard
+        {
+            std::shared_ptr<KeyboardMessage> tempMsg( std::static_pointer_cast<KeyboardMessage>( msg ) );
+            if( tempMsg->status )
+            {
+                if( tempMsg->key == sf::Keyboard::Right )
+                {
+                    xVel = 1;
+                }
+                else if( tempMsg->key == sf::Keyboard::Left )
+                {
+                    xVel = -1;
+                }
+            }
+            else
+            {
+                xVel = 0;
+            }
             break;
-
-        case 2: //Press left
-            xVel = -1;
-            break;
-
-        case 3: //Release right
-        case 4: //Release left
-            xVel = 0;
-            break;
+        }
 
         default:
             break;

@@ -4,7 +4,8 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include "spriteContainer.h"
+#include "container.h"
+#include "message.h"
 
 class Game
 {
@@ -14,7 +15,7 @@ class Game
         bool events();
         bool update();
         bool render();
-        void sendMessage( int msg );
+        void sendMessage( std::shared_ptr<Message> msg );
 
         sf::RenderWindow window;
         std::vector<std::shared_ptr<Container>> gameObjects;

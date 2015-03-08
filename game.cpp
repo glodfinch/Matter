@@ -2,6 +2,7 @@
 #include "spriteContainer.h"
 #include "animContainer.h"
 #include "player.h"
+//#include "message.h"
 #include <memory>
 #include <iostream>
 
@@ -72,11 +73,11 @@ bool Game::events()
         {
             if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
             {
-                sendMessage( 1 );
+                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::Right, 1 ) ) );
             }
             else if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
             {
-                sendMessage( 2 );
+                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::Left, 1 ) ) );
             }
         }
 
@@ -84,11 +85,11 @@ bool Game::events()
         {
             if( !sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
             {
-                sendMessage( 3 );
+                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::Right, 0 ) ) );
             }
             else if( !sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
             {
-                sendMessage( 4 );
+                sendMessage( std::shared_ptr<KeyboardMessage>( new KeyboardMessage( sf::Keyboard::Left, 0 ) ) );
             }
         }
     }
@@ -150,7 +151,7 @@ bool Game::render()
     return ret;
 }
 
-void Game::sendMessage( int msg )
+void Game::sendMessage( std::shared_ptr<Message> msg )
 {
     for( unsigned int i = 0; i < gameObjects.size(); i ++ )
     {

@@ -3,6 +3,7 @@
 
 #include "container.h"
 #include "frame.h"
+#include "message.h"
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <string>
@@ -19,7 +20,7 @@ class Player: public Container
 
         Player( std::vector<std::string>& files, std::vector<int>& del );
         void update();
-        void recvMessage( int msg );
+        void recvMessage( std::shared_ptr<Message>& msg );
 };
 
 #endif // PLAYER_H
