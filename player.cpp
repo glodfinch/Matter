@@ -45,5 +45,4 @@ void Player::update()
 
     sprite.setTexture( textureBank[ currentFrame ].texture, true );
     sprite.move( xVel, yVel );
-    std::cout << xVel << " " << yVel;
 }

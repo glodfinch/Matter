@@ -3,6 +3,7 @@
 #include "animContainer.h"
 #include "player.h"
 #include <memory>
+#include <iostream>
 
 Game::Game( int w, int h, std::string name, std::string ver )
 :  window( sf::VideoMode( w, h ), name + " " + ver, sf::Style::Titlebar | sf::Style::Close )
@@ -30,24 +31,25 @@ Game::Game( int w, int h, std::string name, std::string ver )
 bool Game::start()
 {
     bool ret = true;
-    sf::Time timer;
-    const float frameLimit = 1000 / 60;
+    sf::Clock timer;
+    const sf::Int64 frameLimit = 1000000 / 60;
 
     while( window.isOpen() )
     {
-        float time = timer.asMilliseconds();
-        ret &= events();
-        ret &= update();
-        ret &= render();
+        sf::Int64 time = timer.getElapsedTime().asMicroseconds();
+        events();
+        update();
+        render();
 
         if( !ret )
         {
             break;
         }
 
-        if( timer.asMilliseconds() - time < frameLimit )
+        if( timer.getElapsedTime().asMicroseconds() - time < frameLimit )
         {
-            sf::sleep( sf::milliseconds( frameLimit - timer.asMilliseconds() ) );
+            sf::sleep( sf::microseconds( frameLimit - timer.getElapsedTime().asMicroseconds() ) );
+            timer.restart();
         }
     }
 
