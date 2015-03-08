@@ -4,8 +4,10 @@
 class Container
 {
     public:
-        virtual ~Container() {};
         int type;
+
+        virtual ~Container() {};
+        virtual void recvMessage( int msg ) {};
 };
 
 #endif // CONTAINER_H

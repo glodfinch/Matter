@@ -67,6 +67,30 @@ bool Game::events()
         {
             window.close();
         }
+
+        if( event.type == sf::Event::KeyPressed )
+        {
+            if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
+            {
+                sendMessage( 1 );
+            }
+            else if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
+            {
+                sendMessage( 2 );
+            }
+        }
+
+        if( event.type == sf::Event::KeyReleased )
+        {
+            if( !sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
+            {
+                sendMessage( 3 );
+            }
+            else if( !sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
+            {
+                sendMessage( 4 );
+            }
+        }
     }
 
     return ret;
@@ -124,4 +148,12 @@ bool Game::render()
 
     window.display();
     return ret;
+}
+
+void Game::sendMessage( int msg )
+{
+    for( unsigned int i = 0; i < gameObjects.size(); i ++ )
+    {
+        gameObjects[ i ]->recvMessage( msg );
+    }
 }

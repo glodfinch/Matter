@@ -14,6 +14,7 @@ class Game
         bool events();
         bool update();
         bool render();
+        void sendMessage( int msg );
 
         sf::RenderWindow window;
         std::vector<std::shared_ptr<Container>> gameObjects;

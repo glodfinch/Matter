@@ -46,3 +46,25 @@ void Player::update()
     sprite.setTexture( textureBank[ currentFrame ].texture, true );
     sprite.move( xVel, yVel );
 }
+
+void Player::recvMessage( int msg )
+{
+    switch( msg )
+    {
+        case 1: //Press right
+            xVel = 1;
+            break;
+
+        case 2: //Press left
+            xVel = -1;
+            break;
+
+        case 3: //Release right
+        case 4: //Release left
+            xVel = 0;
+            break;
+
+        default:
+            break;
+    }
+}
