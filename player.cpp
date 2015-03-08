@@ -5,37 +5,55 @@
 Player::Player( std::vector<std::string>& files, std::vector<int>& del )
 {
     type = 3;
+    textureBanks.resize( 2 );
+    std::vector<std::string> tempStandFiles{ "./img/arch.jog00.png" };
+    std::vector<int> tempStandDel{ 1 };
+    std::vector<std::string> tempRunFiles{ "./img/arch.jog00.png", "./img/arch.jog01.png",
+                                        "./img/arch.jog02.png", "./img/arch.jog03.png",
+                                        "./img/arch.jog04.png", "./img/arch.jog05.png",
+                                        "./img/arch.jog06.png", "./img/arch.jog07.png",
+                                        "./img/arch.jog08.png", "./img/arch.jog09.png",
+                                        "./img/arch.jog10.png", "./img/arch.jog11.png" };
+    std::vector<int> tempRunDel{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
-    for( unsigned int i = 0; i < files.size(); i++ )
+    for( unsigned int i = 0; i < tempStandFiles.size(); i++ )
     {
         sf::Texture tempText;
 
-        if( !tempText.loadFromFile( files[ i ] ) )
+        if( !tempText.loadFromFile( tempStandFiles[ i ] ) )
         {
-            std::cerr << "Error loading file " << files[ i ] << std::endl;
+            std::cerr << "Error loading file " << tempStandFiles[ i ] << std::endl;
             break;
         }
 
-        Frame tempFrame( tempText, del[ i ] );
-        textureBank.push_back( tempFrame );
+        Frame tempFrame( tempText, tempStandDel[ i ] );
+        textureBanks[ 0 ].push_back( tempFrame );
     }
 
-    sprite.setTexture( textureBank[ 0 ].texture, true );
-    KEYBOARD_W = false;
-    KEYBOARD_A = false;
-    KEYBOARD_S = false;
-    KEYBOARD_D = false;
-    KEYBOARD_WS = false;
-    KEYBOARD_AD = false;
+    for( unsigned int i = 0; i < tempRunFiles.size(); i++ )
+    {
+        sf::Texture tempText;
+
+        if( !tempText.loadFromFile( tempRunFiles[ i ] ) )
+        {
+            std::cerr << "Error loading file " << tempRunFiles[ i ] << std::endl;
+            break;
+        }
+
+        Frame tempFrame( tempText, tempRunDel[ i ] );
+        textureBanks[ 1 ].push_back( tempFrame );
+    }
+
+    sprite.setTexture( textureBanks[ state ][ 0 ].texture, true );
 }
 
 void Player::update()
 {
-    if( currentDelay == textureBank[ currentFrame ].delay )
+    if( currentDelay == textureBanks[ state ][ currentFrame ].delay )
     {
         currentDelay = 0;
 
-        if( currentFrame == textureBank.size() - 1 )
+        if( currentFrame == textureBanks[ state ].size() - 1 )
         {
             currentFrame = 0;
         }
@@ -51,6 +69,8 @@ void Player::update()
 
     if( KEYBOARD_A || KEYBOARD_D )
     {
+        changeState( 1 );
+
         if( KEYBOARD_AD )
         {
             xVel = 1;
@@ -62,10 +82,11 @@ void Player::update()
     }
     else
     {
+        changeState( 0 );
         xVel = 0;
     }
 
-    sprite.setTexture( textureBank[ currentFrame ].texture, true );
+    sprite.setTexture( textureBanks[ state ][ currentFrame ].texture, true );
     sprite.move( xVel, yVel );
 }
 
@@ -105,5 +126,15 @@ void Player::recvMessage( std::shared_ptr<Message>& msg )
 
         default:
             break;
+    }
+}
+
+void Player::changeState( int s )
+{
+    if( state != s )
+    {
+        state = s;
+        currentFrame = 0;
+        currentDelay = 0;
     }
 }

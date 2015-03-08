@@ -11,17 +11,24 @@
 class Player: public Container
 {
     public:
-        std::vector<Frame> textureBank;
+        std::vector<std::vector<Frame> > textureBanks;
 		sf::Sprite sprite;
 		int currentFrame = 0;
 		int currentDelay = 0;
         float xVel = 0;
         float yVel = 0;
-        bool KEYBOARD_W, KEYBOARD_A, KEYBOARD_S, KEYBOARD_D, KEYBOARD_WS, KEYBOARD_AD;
+        bool KEYBOARD_W = false;
+        bool KEYBOARD_A = false;
+        bool KEYBOARD_S = false;
+        bool KEYBOARD_D = false;
+        bool KEYBOARD_WS = false;
+        bool KEYBOARD_AD = false;
+        int state = 1;
 
         Player( std::vector<std::string>& files, std::vector<int>& del );
         void update();
         void recvMessage( std::shared_ptr<Message>& msg );
+        void changeState( int s );
 };
 
 #endif // PLAYER_H

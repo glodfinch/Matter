@@ -13,7 +13,6 @@ Game::Game( int w, int h, std::string name, std::string ver )
     window.setView( view );
     std::shared_ptr<SpriteContainer> testSprite( new SpriteContainer( "./img/archenoid.stand0.png" ) );
     gameObjects.push_back( testSprite );
-
     std::vector<std::string> tempFiles{ "./img/arch.jog00.png", "./img/arch.jog01.png",
                                         "./img/arch.jog02.png", "./img/arch.jog03.png",
                                         "./img/arch.jog04.png", "./img/arch.jog05.png",
