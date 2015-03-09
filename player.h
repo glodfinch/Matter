@@ -23,6 +23,7 @@ class Player: public Container
         bool KEYBOARD_D = false;
         bool KEYBOARD_WS = false;
         bool KEYBOARD_AD = false;
+        bool flip = false;
         int state = 1;
 
         Player( std::vector<std::string>& files, std::vector<int>& del );

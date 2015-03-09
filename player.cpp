@@ -74,10 +74,12 @@ void Player::update()
         if( KEYBOARD_AD )
         {
             xVel = 1;
+            flip = false;
         }
         else
         {
             xVel = -1;
+            flip = true;
         }
     }
     else
@@ -88,6 +90,17 @@ void Player::update()
 
     sprite.setTexture( textureBanks[ state ][ currentFrame ].texture, true );
     sprite.move( xVel, yVel );
+    int width = textureBanks[ state ][ currentFrame ].texture.getSize().x;
+    int height = textureBanks[ state ][ currentFrame ].texture.getSize().y;
+
+    if( flip )
+    {
+        sprite.setTextureRect( sf::IntRect( width, 0, -width, height ) );
+    }
+    else
+    {
+        sprite.setTextureRect( sf::IntRect( 0, 0, width, height ) );
+    }
 }
 
 void Player::recvMessage( std::shared_ptr<Message>& msg )
