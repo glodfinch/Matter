@@ -52,13 +52,13 @@ void ObjectManager::sortX()
 {
     for( unsigned int i = 0; i < objects.size() - 1; i ++ )
     {
-        if( getSprite( i )->getPosition().x > getSprite( i + 1 )->getPosition().x )
+        if( objects[ i ]->sprite.getPosition().x > objects[ i + 1 ]->sprite.getPosition().x )
         {
             std::swap( objects[ i ], objects[ i + 1 ] );
 
             for( int j = i; j > 0; j -- )
             {
-                if( getSprite( j )->getPosition().x < getSprite( j - 1 )->getPosition().x )
+                if( objects[ j ]->sprite.getPosition().x < objects[ j - 1 ]->sprite.getPosition().x )
                 {
                     std::swap( objects[ j ], objects[ j - 1 ] );
                 }
