@@ -8,7 +8,6 @@ class SpriteContainer: public Container
 {
 	public:
 		sf::Texture texture;
-		sf::Sprite sprite;
 
 		SpriteContainer( std::string file );
 };

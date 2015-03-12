@@ -5,14 +5,12 @@
 #include "frame.h"
 #include "message.h"
 #include <vector>
-#include <SFML/Graphics.hpp>
 #include <string>
 
 class Player: public Container
 {
     public:
         std::vector<std::vector<Frame> > textureBanks;
-		sf::Sprite sprite;
 		int currentFrame = 0;
 		int currentDelay = 0;
         float xVel = 0;

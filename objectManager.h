@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include "container.h"
+#include <SFML/Graphics.hpp>
 
 class ObjectManager
 {

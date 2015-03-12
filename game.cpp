@@ -23,22 +23,6 @@ Game::Game( int w, int h, std::string name, std::string ver )
     gameObjects.addObject( 1, "./img/archenoid.stand0.png" );
     gameObjects.addObject( 2, tempFiles, tempDel, 30 );
     gameObjects.addObject( 3, tempFiles, tempDel, 0, 50 );
-
-    /*std::shared_ptr<SpriteContainer> testSprite( new SpriteContainer( "./img/archenoid.stand0.png" ) );
-    gameObjects.push_back( testSprite );
-    std::vector<std::string> tempFiles{ "./img/arch.jog00.png", "./img/arch.jog01.png",
-                                        "./img/arch.jog02.png", "./img/arch.jog03.png",
-                                        "./img/arch.jog04.png", "./img/arch.jog05.png",
-                                        "./img/arch.jog06.png", "./img/arch.jog07.png",
-                                        "./img/arch.jog08.png", "./img/arch.jog09.png",
-                                        "./img/arch.jog10.png", "./img/arch.jog11.png" };
-    std::vector<int> tempDel{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-    std::shared_ptr<AnimContainer> testAnim( new AnimContainer( tempFiles, tempDel ) );
-    testAnim->sprite.setPosition( 30, 0 );
-    gameObjects.push_back( testAnim );
-    std::shared_ptr<Player> testPlayer( new Player( tempFiles, tempDel ) );
-    testPlayer->sprite.setPosition( 0, 50 );
-    gameObjects.push_back( testPlayer );*/
 }
 
 bool Game::start()
@@ -137,29 +121,11 @@ bool Game::render()
 {
     bool ret = true;
 
-
-
     window.clear();
 
     for( unsigned int i = 0; i < gameObjects.objects.size(); i++ )
     {
-        switch( gameObjects.objects[ i ]->type )
-        {
-        case 1: //Sprite
-            window.draw( std::dynamic_pointer_cast<SpriteContainer>( gameObjects.objects[ i ] )->sprite );
-            break;
-
-        case 2: //Animation
-            window.draw( std::dynamic_pointer_cast<AnimContainer>( gameObjects.objects[ i ] )->sprite );
-            break;
-
-        case 3: //Player
-            window.draw( std::dynamic_pointer_cast<Player>( gameObjects.objects[ i ] )->sprite );
-            break;
-
-        default:
-            break;
-        }
+        window.draw( gameObjects.objects[ i ]->sprite );
     }
 
     window.display();
