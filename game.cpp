@@ -11,7 +11,20 @@ Game::Game( int w, int h, std::string name, std::string ver )
 {
     sf::View view( sf::FloatRect( 0, 0, 160, 90 ) );
     window.setView( view );
-    std::shared_ptr<SpriteContainer> testSprite( new SpriteContainer( "./img/archenoid.stand0.png" ) );
+
+    std::vector<std::string> tempFiles{ "./img/arch.jog00.png", "./img/arch.jog01.png",
+                                        "./img/arch.jog02.png", "./img/arch.jog03.png",
+                                        "./img/arch.jog04.png", "./img/arch.jog05.png",
+                                        "./img/arch.jog06.png", "./img/arch.jog07.png",
+                                        "./img/arch.jog08.png", "./img/arch.jog09.png",
+                                        "./img/arch.jog10.png", "./img/arch.jog11.png" };
+    std::vector<int> tempDel{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+
+    gameObjects.addObject( 1, "./img/archenoid.stand0.png" );
+    gameObjects.addObject( 2, tempFiles, tempDel, 30 );
+    gameObjects.addObject( 3, tempFiles, tempDel, 0, 50 );
+
+    /*std::shared_ptr<SpriteContainer> testSprite( new SpriteContainer( "./img/archenoid.stand0.png" ) );
     gameObjects.push_back( testSprite );
     std::vector<std::string> tempFiles{ "./img/arch.jog00.png", "./img/arch.jog01.png",
                                         "./img/arch.jog02.png", "./img/arch.jog03.png",
@@ -25,7 +38,7 @@ Game::Game( int w, int h, std::string name, std::string ver )
     gameObjects.push_back( testAnim );
     std::shared_ptr<Player> testPlayer( new Player( tempFiles, tempDel ) );
     testPlayer->sprite.setPosition( 0, 50 );
-    gameObjects.push_back( testPlayer );
+    gameObjects.push_back( testPlayer );*/
 }
 
 bool Game::start()
@@ -100,16 +113,16 @@ bool Game::update()
 {
     bool ret = true;
 
-    for( unsigned int i = 0; i < gameObjects.size(); i++ )
+    for( unsigned int i = 0; i < gameObjects.objects.size(); i++ )
     {
-        switch( gameObjects[ i ]->type )
+        switch( gameObjects.objects[ i ]->type )
         {
         case 2:
-            std::dynamic_pointer_cast<AnimContainer>( gameObjects[ i ] )->incFrame();
+            std::dynamic_pointer_cast<AnimContainer>( gameObjects.objects[ i ] )->incFrame();
             break;
 
         case 3:
-            std::dynamic_pointer_cast<Player>( gameObjects[ i ] )->update();
+            std::dynamic_pointer_cast<Player>( gameObjects.objects[ i ] )->update();
             break;
 
         default:
@@ -123,22 +136,25 @@ bool Game::update()
 bool Game::render()
 {
     bool ret = true;
+
+
+
     window.clear();
 
-    for( unsigned int i = 0; i < gameObjects.size(); i++ )
+    for( unsigned int i = 0; i < gameObjects.objects.size(); i++ )
     {
-        switch( gameObjects[ i ]->type )
+        switch( gameObjects.objects[ i ]->type )
         {
         case 1: //Sprite
-            window.draw( std::dynamic_pointer_cast<SpriteContainer>( gameObjects[ i ] )->sprite );
+            window.draw( std::dynamic_pointer_cast<SpriteContainer>( gameObjects.objects[ i ] )->sprite );
             break;
 
         case 2: //Animation
-            window.draw( std::dynamic_pointer_cast<AnimContainer>( gameObjects[ i ] )->sprite );
+            window.draw( std::dynamic_pointer_cast<AnimContainer>( gameObjects.objects[ i ] )->sprite );
             break;
 
         case 3: //Player
-            window.draw( std::dynamic_pointer_cast<Player>( gameObjects[ i ] )->sprite );
+            window.draw( std::dynamic_pointer_cast<Player>( gameObjects.objects[ i ] )->sprite );
             break;
 
         default:
@@ -152,8 +168,8 @@ bool Game::render()
 
 void Game::sendMessage( std::shared_ptr<Message> msg )
 {
-    for( unsigned int i = 0; i < gameObjects.size(); i ++ )
+    for( unsigned int i = 0; i < gameObjects.objects.size(); i ++ )
     {
-        gameObjects[ i ]->recvMessage( msg );
+        gameObjects.objects[ i ]->recvMessage( msg );
     }
 }

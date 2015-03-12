@@ -6,6 +6,7 @@
 #include <string>
 #include "container.h"
 #include "message.h"
+#include "objectManager.h"
 
 class Game
 {
@@ -18,7 +19,8 @@ class Game
         void sendMessage( std::shared_ptr<Message> msg );
 
         sf::RenderWindow window;
-        std::vector<std::shared_ptr<Container>> gameObjects;
+        ObjectManager gameObjects;
+        //std::vector<
 };
 
 #endif // GAME_H
