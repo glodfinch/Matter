@@ -11,4 +11,8 @@ SpriteContainer::SpriteContainer( std::string file )
 	}
 
 	sprite.setTexture( texture );
+    collBox.x = 0;
+    collBox.y = 0;
+    collBox.w = texture.getSize().x;
+    collBox.h = texture.getSize().y;
 }

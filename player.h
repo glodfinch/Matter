@@ -4,6 +4,7 @@
 #include "container.h"
 #include "frame.h"
 #include "message.h"
+#include "collisionBox.h"
 #include <vector>
 #include <string>
 
@@ -11,7 +12,7 @@ class Player: public Container
 {
     public:
         std::vector<std::vector<Frame> > textureBanks;
-		int currentFrame = 0;
+		unsigned int currentFrame = 0;
 		int currentDelay = 0;
         float xVel = 0;
         float yVel = 0;

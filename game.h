@@ -17,6 +17,7 @@ class Game
         bool update();
         bool render();
         void sendMessage( std::shared_ptr<Message> msg );
+        bool checkCollision( int i, int j );
 
         sf::RenderWindow window;
         ObjectManager gameObjects;

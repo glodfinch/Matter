@@ -18,4 +18,13 @@ class KeyboardMessage: public Message
         KeyboardMessage( sf::Keyboard::Key k, bool s ) { type = 1; key = k; status = s; };
 };
 
+class CollisionMessage: public Message
+{
+    public:
+        int recv;
+        int coll;
+
+        CollisionMessage( int i, int j ) { type = 2; recv = i; coll = j; };
+};
+
 #endif // MESSAGE_H

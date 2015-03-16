@@ -45,6 +45,10 @@ Player::Player( std::vector<std::string>& files, std::vector<int>& del )
     }
 
     sprite.setTexture( textureBanks[ state ][ 0 ].texture, true );
+    collBox.x = 0;
+    collBox.y = 0;
+    collBox.w = 9;
+    collBox.h = 13;
 }
 
 void Player::update()
@@ -135,6 +139,11 @@ void Player::recvMessage( std::shared_ptr<Message>& msg )
                 }
             }
             break;
+        }
+
+        case 2: //Collision
+        {
+            sprite.move( -xVel, -yVel );
         }
 
         default:

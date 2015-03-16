@@ -22,7 +22,7 @@ AnimContainer::AnimContainer( std::vector<std::string>& files, std::vector<int>&
     sprite.setTexture( textureBank[ 0 ].texture, true );
 }
 
-void AnimContainer::incFrame()
+void AnimContainer::update()
 {
     if( currentDelay == textureBank[ currentFrame ].delay )
     {

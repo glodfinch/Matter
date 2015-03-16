@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "container.h"
+#include "collisionBox.h"
 
 class SpriteContainer: public Container
 {
@@ -10,6 +11,7 @@ class SpriteContainer: public Container
 		sf::Texture texture;
 
 		SpriteContainer( std::string file );
+		void update() {};
 };
 
 #endif // SPRITECONTAINER_H

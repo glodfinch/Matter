@@ -1,6 +1,7 @@
 #include "game.h"
 #include "spriteContainer.h"
 #include "animContainer.h"
+#include "collisionBox.h"
 #include "player.h"
 //#include "message.h"
 #include <memory>
@@ -20,8 +21,8 @@ Game::Game( int w, int h, std::string name, std::string ver )
                                         "./img/arch.jog10.png", "./img/arch.jog11.png" };
     std::vector<int> tempDel{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
-    gameObjects.addObject( 1, "./img/archenoid.stand0.png" );
-    gameObjects.addObject( 2, tempFiles, tempDel, 30 );
+    gameObjects.addObject( 1, "./img/archenoid.stand0.png", 100, 40 );
+    //gameObjects.addObject( 2, tempFiles, tempDel, 30 );
     gameObjects.addObject( 3, tempFiles, tempDel, 0, 50 );
 }
 
@@ -99,18 +100,22 @@ bool Game::update()
 
     for( unsigned int i = 0; i < gameObjects.objects.size(); i++ )
     {
-        switch( gameObjects.objects[ i ]->type )
+        gameObjects.objects[ i ]->update();
+    }
+
+    for( unsigned int i = 0; i < gameObjects.objects.size(); i++ )
+    {
+        int type = gameObjects.objects[ i ]->type;
+
+        if( type == 3 )
         {
-        case 2:
-            std::dynamic_pointer_cast<AnimContainer>( gameObjects.objects[ i ] )->incFrame();
-            break;
-
-        case 3:
-            std::dynamic_pointer_cast<Player>( gameObjects.objects[ i ] )->update();
-            break;
-
-        default:
-            break;
+            for( unsigned int j = 0; j < gameObjects.objects.size(); j++ )
+            {
+                if( i != j && checkCollision( i, j ) )
+                {
+                    sendMessage( std::shared_ptr<CollisionMessage>( new CollisionMessage( i, j ) ) );
+                }
+            }
         }
     }
 
@@ -138,4 +143,22 @@ void Game::sendMessage( std::shared_ptr<Message> msg )
     {
         gameObjects.objects[ i ]->recvMessage( msg );
     }
+}
+
+bool Game::checkCollision( int i, int j )
+{
+    bool ret = false;
+    CollisionBox cbi = gameObjects.objects[ i ]->collBox;
+    CollisionBox cbj = gameObjects.objects[ j ]->collBox;
+    int ix = cbi.x + gameObjects.objects[ i ]->sprite.getPosition().x;
+    int iy = cbi.y + gameObjects.objects[ i ]->sprite.getPosition().y;
+    int jx = cbj.x + gameObjects.objects[ j ]->sprite.getPosition().x;
+    int jy = cbj.y + gameObjects.objects[ j ]->sprite.getPosition().y;
+
+    if( ix < jx + cbj.w && ix + cbi.w > jx && iy < jy + cbj.h && iy + cbi.h > jy )
+    {
+        ret = true;
+    }
+
+    return ret;
 }
